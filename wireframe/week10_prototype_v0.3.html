@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>모의투자 | 모바일 프로토타입</title>
+<style>
+:root{--bg:#f2f2f5;--surface:#fff;--ink:#20212a;--muted:#777987;--line:#e5e5eb;--soft:#f7f7fa;--accent:#6554e8;--accent-soft:#f0edff;--good:#23865b;--bad:#c34e58;--shadow:0 8px 24px rgba(32,33,42,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}button,input,select{font:inherit}button{cursor:pointer}
+.app{width:min(100%,430px);min-height:100vh;margin:0 auto;background:#f8f8fb;position:relative;box-shadow:0 0 32px #2221;padding-bottom:82px}
+.status{height:30px;padding:7px 20px 0;display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:#41414b}
+.header{height:58px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:9px;font-weight:850;font-size:16px;letter-spacing:-.4px}.brandmark{width:29px;height:29px;border-radius:10px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:15px}.profile{width:31px;height:31px;border-radius:50%;background:#efeff4;border:1px solid #e1e1e8;display:grid;place-items:center;font-size:13px}
+main{padding:19px 17px 24px}.screen{display:none;animation:appear .18s ease}.screen.active{display:block}@keyframes appear{from{opacity:.55;transform:translateY(3px)}to{opacity:1;transform:none}}
+.eyebrow{font-size:11px;color:var(--muted);font-weight:650;margin-bottom:7px}.title{font-size:24px;letter-spacing:-1px;line-height:1.25;margin:0 0 7px;font-weight:850}.desc{font-size:12px;color:var(--muted);line-height:1.55;margin:0 0 17px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:15px;margin:11px 0;box-shadow:0 3px 12px #20212a05}.card.soft{background:var(--soft)}.card.purple{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 8px 18px #6554e82c}
+.cardhead{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800;margin-bottom:12px}.hint{font-size:10px;color:var(--muted);font-weight:500}.tag{font-size:10px;border-radius:20px;padding:5px 8px;background:var(--accent-soft);color:var(--accent);font-weight:750;white-space:nowrap}
+.bigmoney{font-size:28px;font-weight:850;letter-spacing:-.8px;margin:7px 0 4px}.small{font-size:11px;color:var(--muted)}.purple .small{color:#e7e3ff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.metric{padding:12px;background:#fff;border:1px solid var(--line);border-radius:13px;min-width:0}.metric .k{font-size:10px;color:var(--muted);margin-bottom:7px}.metric .v{font-size:17px;font-weight:850;letter-spacing:-.4px}.metric .subv{font-size:10px;color:var(--muted);margin-top:3px}
+.section-title{font-size:14px;font-weight:850;margin:21px 0 9px;letter-spacing:-.3px}
+.btn{border:1px solid #dedee6;background:#fff;color:var(--ink);border-radius:12px;padding:12px 14px;font-size:12px;font-weight:800}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 5px 12px #6554e82c}.btn.ghost{background:#f5f4ff;color:var(--accent);border-color:#e5e1ff}.btn.full{width:100%;margin-top:9px}.btn:active{transform:scale(.99)}
+.field{display:block;margin:12px 0}.field span{display:block;font-size:11px;color:#666875;font-weight:700;margin-bottom:7px}.field input,.field select{width:100%;height:44px;border:1px solid #dedee6;border-radius:11px;background:#fff;padding:0 12px;color:var(--ink);outline:none}.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px #6554e818}
+.row{display:flex;gap:8px}.row>*{flex:1;min-width:0}
+.stock{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);gap:10px}.stock:last-child{border:0;padding-bottom:0}.stockname{font-size:13px;font-weight:800}.stockmeta{font-size:10px;color:var(--muted);margin-top:4px}.stockprice{text-align:right;font-size:13px;font-weight:800;white-space:nowrap}.stockprice small{display:block;font-size:10px;margin-top:4px;color:var(--good)}
+.positive{color:var(--good)!important}.negative{color:var(--bad)!important}
+.chips{display:flex;gap:7px}.chip{border:1px solid #dedee6;border-radius:10px;padding:9px 13px;background:#fff;font-size:11px;font-weight:750;color:#5e606c}.chip.on{background:var(--accent-soft);border-color:#c9c1ff;color:var(--accent)}
+.notice{padding:12px 13px;border:1px solid #e4e1f5;background:#f7f5ff;border-radius:12px;font-size:11px;line-height:1.55;color:#55536b;margin:12px 0}.notice strong{display:block;color:#343247;margin-bottom:3px}.notice.error{background:#fff4f4;border-color:#f0d4d6;color:#8e454a}.notice.error strong{color:#8e454a}.notice.loading{background:#f4f4f7;border-color:#e0e0e7}
+.listitem{display:flex;justify-content:space-between;gap:8px;padding:12px 0;border-bottom:1px solid var(--line);font-size:11px}.listitem:last-child{border:0}.listitem b{font-size:12px}.empty{padding:22px 12px;text-align:center;color:var(--muted);font-size:12px;line-height:1.6}
+.chart{height:132px;border:1px solid var(--line);border-radius:13px;background:linear-gradient(180deg,#fafaff,#fff);padding:12px}.chart svg{width:100%;height:100%}
+.bar{height:7px;background:#ececf1;border-radius:9px;overflow:hidden;margin:8px 0 13px}.bar i{display:block;height:100%;background:var(--accent);border-radius:9px}
+.bottomnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,430px);height:72px;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:8px 8px max(8px,env(safe-area-inset-bottom));z-index:10}
+.navbtn{border:0;background:transparent;color:#92939e;font-size:10px;font-weight:650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}.navbtn .ico{font-size:18px;line-height:1}.navbtn.active{color:var(--accent);font-weight:850}
+@media(min-width:600px){body{padding:22px 0}.app{min-height:calc(100vh - 44px);border-radius:26px;overflow:hidden}.bottomnav{bottom:22px;border-radius:0 0 26px 26px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="status"><span>9:41</span><span>●●●　▰</span></div>
+  <header class="header"><div class="brand"><span class="brandmark">₩</span>모의투자</div><div class="profile">나</div></header>
+  <main>
+    <section class="screen active" id="home">
+      <div class="eyebrow">가상 자금으로 시작하는 투자 연습</div>
+      <h1 class="title">나의 투자 현황</h1><p class="desc">실제 주가 변동을 반영한 가상 거래와 손익을 확인해 보세요.</p>
+      <div class="card purple"><div class="small">총 평가 자산 <span style="float:right">예시 데이터</span></div><div class="bigmoney">₩10,245,000</div><div class="small">초기 가상 자금 ₩10,000,000 대비　<span>+2.45%</span></div></div>
+      <div class="grid2">
+        <div class="metric"><div class="k">가상 현금</div><div class="v" id="cash">₩6,820,000</div></div>
+        <div class="metric"><div class="k">총 손익</div><div class="v positive">+₩245,000</div><div class="subv">+2.45%</div></div>
+        <div class="metric"><div class="k">보유 종목</div><div class="v">3개</div></div>
+        <div class="metric"><div class="k">누적 거래</div><div class="v" id="trade-count">8회</div></div>
+      </div>
+      <button class="btn primary full" onclick="navigate('market')">모의투자 시작하기</button>
+      <div class="section-title">최근 거래</div>
+      <div class="card" id="recent-list">
+        <div class="listitem"><span>삼성전자 · 매수 2주</span><b>₩156,000</b></div>
+        <div class="listitem"><span>현대차 · 매도 1주</span><b>₩248,000</b></div>
+        <div class="listitem"><span>카카오 · 매수 5주</span><b>₩205,000</b></div>
+        <button class="btn full" onclick="navigate('history')">전체 거래 기록 보기</button>
+      </div>
+    </section>
+
+    <section class="screen" id="market">
+      <div class="eyebrow">종목 조회</div><h1 class="title">어떤 종목을<br>거래할까요?</h1><p class="desc">종목과 표시된 주가 예시를 확인하고 가상 거래를 진행합니다.</p>
+      <label class="field"><span>종목 검색</span><input id="stock-search" placeholder="종목명 입력" oninput="filterStocks()"></label>
+      <div class="card"><div class="cardhead">종목 목록 <span class="tag">예시 데이터</span></div>
+        <div id="stocks">
+          <div class="stock" data-name="삼성전자"><div><div class="stockname">삼성전자</div><div class="stockmeta">005930 · 기준 시점 15:30</div></div><div class="stockprice">₩78,000<small>+1.2%</small></div></div>
+          <div class="stock" data-name="현대차"><div><div class="stockname">현대차</div><div class="stockmeta">005380 · 기준 시점 15:30</div></div><div class="stockprice">₩248,000<small>+0.6%</small></div></div>
+          <div class="stock" data-name="카카오"><div><div class="stockname">카카오</div><div class="stockmeta">035720 · 기준 시점 15:30</div></div><div class="stockprice">₩41,000<small class="negative">-0.8%</small></div></div>
+        </div>
+        <div id="stock-empty" class="empty" hidden>검색 결과가 없습니다.<br>종목명을 다시 확인해 주세요.</div>
+      </div>
+      <div class="notice"><strong>주가 데이터 안내</strong>현재 표시된 가격과 등락률은 화면 확인을 위한 예시 데이터이며 실시간 시세가 아닙니다.</div>
+      <button class="btn primary full" onclick="navigate('trade')">삼성전자 거래하기</button>
+    </section>
+
+    <section class="screen" id="trade">
+      <div class="eyebrow">가상 매수·매도</div><h1 class="title">거래 내용을 입력하세요</h1><p class="desc">실제 돈이 아닌 가상 투자금으로 거래를 연습합니다.</p>
+      <div class="card"><div class="cardhead"><span>삼성전자</span><span class="tag">005930</span></div><div class="bigmoney" style="font-size:25px">₩78,000</div><div class="small">예시 주가 · 기준 시점 15:30</div></div>
+      <div class="field"><span>거래 구분</span><div class="chips"><button class="chip on" id="buy" onclick="setSide('buy')">매수</button><button class="chip" id="sell" onclick="setSide('sell')">매도</button></div></div>
+      <label class="field"><span>주문 수량 (주)</span><input id="quantity" type="number" min="1" step="1" value="2" inputmode="numeric"></label>
+      <div class="card soft"><div class="listitem"><span>예상 주문 금액</span><b id="order-total">₩156,000</b></div><div class="listitem"><span>가상 현금 잔액</span><b id="trade-cash">₩6,820,000</b></div></div>
+      <button class="btn primary full" onclick="submitTrade()">가상 거래 실행</button>
+      <div id="trade-message" class="notice"><strong>주문 대기</strong>수량을 확인한 뒤 거래를 실행하세요.</div>
+      <button class="btn full" onclick="navigate('market')">종목 목록으로 돌아가기</button>
+    </section>
+
+    <section class="screen" id="history">
+      <div class="eyebrow">거래 내역</div><h1 class="title">나의 거래 기록</h1><p class="desc">가상 매수·매도 거래 내역을 확인합니다.</p>
+      <div class="card"><div class="cardhead">전체 거래 <span class="tag" id="history-count">예시 데이터</span></div><div id="history-list">
+        <div class="listitem"><span>10.28 · 삼성전자 매수 2주</span><b>₩156,000</b></div>
+        <div class="listitem"><span>10.27 · 현대차 매도 1주</span><b>₩248,000</b></div>
+        <div class="listitem"><span>10.26 · 카카오 매수 5주</span><b>₩205,000</b></div>
+        <div class="listitem"><span>10.25 · 삼성전자 매수 1주</span><b>₩78,000</b></div>
+      </div><div id="history-empty" class="empty" hidden>표시할 거래 기록이 없습니다.</div></div>
+      <button class="btn primary full" onclick="navigate('analysis')">기간별 손익 분석하기</button>
+    </section>
+
+    <section class="screen" id="analysis">
+      <div class="eyebrow">기간별 손익 통계</div><h1 class="title">투자 결과 살펴보기</h1><p class="desc">조회할 기간을 정해 해당 기간의 손익과 거래 통계를 확인합니다. 별도의 투자 조언은 제공하지 않습니다.</p>
+      <div class="card"><div class="cardhead">분석 기간</div><div class="row"><label class="field"><span>시작일</span><input type="date" id="from-date" value="2026-10-01"></label><label class="field"><span>종료일</span><input type="date" id="to-date" value="2026-10-31"></label></div>
+        <div class="chips"><button class="chip" onclick="period('week',this)">1주</button><button class="chip on" onclick="period('month',this)">1개월</button><button class="chip" onclick="period('all',this)">전체</button></div>
+        <button class="btn primary full" onclick="analyze()">선택 기간 분석하기</button>
+      </div>
+      <div id="analysis-message" class="notice"><strong>분석 결과 · 예시 데이터</strong>2026.10.01–2026.10.31 기준 예시 통계입니다.</div>
+      <div id="analysis-content">
+        <div class="grid2"><div class="metric"><div class="k">기간 손익</div><div class="v positive">+₩245,000</div></div><div class="metric"><div class="k">수익률</div><div class="v positive">+2.45%</div></div><div class="metric"><div class="k">거래 횟수</div><div class="v">8회</div></div><div class="metric"><div class="k">평균 보유 기간</div><div class="v">4.2일</div></div></div>
+        <div class="card"><div class="cardhead">기간별 손익 추이 <span class="tag">예시 데이터</span></div><div class="chart"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><path d="M0 80 L35 68 L70 74 L105 48 L140 55 L175 35 L210 48 L245 24 L280 30 L300 14" fill="none" stroke="#6554e8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 80 L35 68 L70 74 L105 48 L140 55 L175 35 L210 48 L245 24 L280 30 L300 14 L300 100 L0 100Z" fill="#6554e8" opacity=".08"/></svg></div></div>
+      </div>
+      <button class="btn primary full" onclick="navigate('feedback')">행동 패턴 확인하기</button>
+    </section>
+
+    <section class="screen" id="feedback">
+      <div class="eyebrow">AI 행동 패턴 분석</div><h1 class="title">나의 투자 행동 리포트</h1><p class="desc">거래 기록을 바탕으로 행동 패턴을 정리한 예시 결과입니다.</p>
+      <div class="card purple"><div class="small">종합 점수 <span style="float:right">예시 데이터</span></div><div class="bigmoney">78<span style="font-size:14px"> / 100점</span></div><div class="small">화면 확인용 예시 점수이며 실제 평가 결과가 아닙니다.</div></div>
+      <div class="card"><div class="cardhead">행동 분석 항목 <span class="hint">예시 데이터</span></div>
+        <div class="listitem"><span>거래 빈도</span><b>82점</b></div><div class="bar"><i style="width:82%"></i></div>
+        <div class="listitem"><span>평균 보유 기간</span><b>75점</b></div><div class="bar"><i style="width:75%"></i></div>
+        <div class="listitem"><span>손익 변동</span><b>80점</b></div><div class="bar"><i style="width:80%"></i></div>
+        <div class="listitem"><span>위험·수익 분석</span><b>—</b></div>
+        <div class="hint">평가 항목과 점수 산정 기준은 팀의 최종 규칙 확정이 필요합니다.</div>
+      </div>
+      <div class="card soft"><div class="cardhead">AI 행동 패턴 피드백 <span class="tag">예시 데이터</span></div><p style="font-size:12px;line-height:1.75;margin:0">선택한 기간에 거래가 여러 차례 발생했습니다. 거래 빈도와 평균 보유 기간을 함께 확인하고, 매매 전에 세운 기준을 다음 거래에서도 일관되게 적용했는지 스스로 점검해 볼 수 있습니다.</p><div class="hint" style="margin-top:10px">분석 근거: 거래 빈도 · 평균 보유 기간 · 기간별 손익</div></div>
+      <div class="notice">AI 결과는 거래 행동을 돌아보기 위한 참고 정보이며 특정 종목의 매수·매도 추천이나 수익 보장을 의미하지 않습니다.</div>
+    </section>
+
+    <section class="screen" id="project">
+      <div class="eyebrow">프로젝트 진행 현황</div><h1 class="title">모의투자 진행 상태</h1><p class="desc">프로젝트 평가 기간과 거래량 확인 상태를 확인합니다.</p>
+      <div class="card"><div class="cardhead">진행 정보</div><div class="listitem"><span>프로젝트 상태</span><b id="project-status">진행 중</b></div><div class="listitem"><span>평가 기준</span><b>실제 체결 기준</b></div><div class="listitem"><span>첫 주 거래 기록</span><b>수집 중</b></div></div>
+      <div class="card soft"><div class="cardhead">첫 주 거래량 확인</div><p style="font-size:11px;line-height:1.7;margin:0">첫 주의 모든 평가 대상 거래일을 평균 계산에 포함하며, 거래가 없는 날은 0건으로 계산합니다. 첫 주 평균 거래 횟수가 0건이면 체결량 미달로 프로젝트를 종료하고, BC-01 평가 및 첫 주 기록 재평가는 진행하지 않습니다.</p></div>
+      <button class="btn full" onclick="previewEnd()">체결량 미달 종료 상태 확인</button>
+      <div id="project-message" class="notice"><strong>상태 안내</strong>현재는 진행 중인 예시 상태입니다.</div>
+    </section>
+  </main>
+  <nav class="bottomnav">
+    <button class="navbtn active" data-page="home" onclick="navigate('home')"><span class="ico">⌂</span>홈</button>
+    <button class="navbtn" data-page="market" onclick="navigate('market')"><span class="ico">▤</span>종목·거래</button>
+    <button class="navbtn" data-page="analysis" onclick="navigate('analysis')"><span class="ico">▥</span>손익 통계</button>
+    <button class="navbtn" data-page="feedback" onclick="navigate('feedback')"><span class="ico">◎</span>AI 분석</button>
+  </nav>
+</div>
+<script>
+let side='buy',tradeCount=8,cash=6820000,transactions=[];
+const pages=['home','market','trade','history','analysis','feedback','project'];
+function navigate(page){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===page));
+  document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===page || (page==='trade'&&b.dataset.page==='market') || (page==='project'&&b.dataset.page==='feedback') || (page==='history'&&b.dataset.page==='home')));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function setSide(value){side=value;document.getElementById('buy').classList.toggle('on',side==='buy');document.getElementById('sell').classList.toggle('on',side==='sell')}
+function won(n){return '₩'+Math.round(n).toLocaleString('ko-KR')}
+function updateTotal(){const q=Number(document.getElementById('quantity').value)||0;document.getElementById('order-total').textContent=won(q*78000)}
+document.getElementById('quantity').addEventListener('input',updateTotal);
+function message(el,type,title,body){el.className='notice'+(type?' '+type:'');el.innerHTML='<strong>'+title+'</strong>'+body}
+function submitTrade(){
+ const q=Number(document.getElementById('quantity').value),out=document.getElementById('trade-message'),amount=q*78000;
+ if(!Number.isInteger(q)||q<1){message(out,'error','입력 오류','주문 수량은 1 이상의 정수로 입력해 주세요. 수량을 수정한 뒤 다시 실행할 수 있습니다.');return}
+ if(side==='buy'&&amount>cash){message(out,'error','가상 잔액 부족','가상 현금 잔액보다 주문 금액이 큽니다. 수량을 줄인 뒤 다시 시도해 주세요.');return}
+ message(out,'loading','거래 처리 중','가상 주문을 처리하고 있습니다…');
+ setTimeout(()=>{
+   if(side==='buy')cash-=amount;else cash+=amount;
+   tradeCount++;transactions.unshift({label:'오늘 · 삼성전자 '+(side==='buy'?'매수 ':'매도 ')+q+'주',amount});
+   document.getElementById('cash').textContent=won(cash);document.getElementById('trade-cash').textContent=won(cash);
+   document.getElementById('trade-count').textContent=tradeCount+'회';
+   document.getElementById('history-count').textContent=(4+transactions.length)+'건';
+   const row=document.createElement('div');row.className='listitem';row.innerHTML='<span>'+transactions[0].label+'</span><b>'+won(amount)+'</b>';document.getElementById('history-list').prepend(row);
+   document.getElementById('history-empty').hidden=true;
+   const recent=document.createElement('div');recent.className='listitem';recent.innerHTML='<span>'+transactions[0].label+'</span><b>'+won(amount)+'</b>';document.getElementById('recent-list').prepend(recent);
+   message(out,'','거래 완료', (side==='buy'?'매수':'매도')+' '+q+'주가 가상 거래 기록에 반영되었습니다.');
+ },450);
+}
+function filterStocks(){const q=document.getElementById('stock-search').value.trim().toLowerCase();let count=0;document.querySelectorAll('#stocks .stock').forEach(row=>{const show=row.dataset.name.toLowerCase().includes(q);row.style.display=show?'flex':'none';if(show)count++});document.getElementById('stock-empty').hidden=count>0}
+function period(p,btn){document.querySelectorAll('#analysis .chip').forEach(x=>x.classList.remove('on'));btn.classList.add('on');const now=new Date('2026-10-31T12:00:00');let start=new Date(now);if(p==='week')start.setDate(start.getDate()-6);if(p==='month')start.setMonth(start.getMonth()-1);if(p==='all')start=new Date('2026-01-01T12:00:00');document.getElementById('from-date').value=start.toISOString().slice(0,10);document.getElementById('to-date').value=now.toISOString().slice(0,10)}
+function analyze(){const from=document.getElementById('from-date').value,to=document.getElementById('to-date').value,msg=document.getElementById('analysis-message'),content=document.getElementById('analysis-content');if(!from||!to||from>to){message(msg,'error','기간 입력 오류','시작일과 종료일을 확인해 주세요. 시작일은 종료일보다 늦을 수 없습니다.');content.innerHTML='';return}message(msg,'loading','분석 처리 중','선택한 기간의 거래 기록을 집계하고 있습니다…');setTimeout(()=>{if(transactions.length===0&&from>'2026-10-31'){message(msg,'','분석 결과 없음','선택한 기간에 확인할 거래 기록이 없습니다. 기간을 변경해 다시 확인해 주세요.');content.innerHTML='<div class="empty">분석할 데이터가 없습니다.</div>'}else{message(msg,'','분석 완료 · 예시 데이터',from+'부터 '+to+'까지의 예시 통계를 표시합니다. 실제 데이터 연동 전의 고정 예시 결과입니다.');}},350)}
+function previewEnd(){document.getElementById('project-status').textContent='종료';message(document.getElementById('project-message'),'error','프로젝트 종료 · 예시 상태','첫 주 평균 거래 횟수가 0건인 경우 체결량 미달로 종료됩니다. BC-01 평가와 첫 주 기록 재평가는 진행하지 않습니다.')}
+</script>
+</body></html>

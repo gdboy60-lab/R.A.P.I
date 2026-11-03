@@ -4,35 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>모의투자 | 모바일 프로토타입</title>
-<style>
-:root{--bg:#f2f2f5;--surface:#fff;--ink:#20212a;--muted:#777987;--line:#e5e5eb;--soft:#f7f7fa;--accent:#6554e8;--accent-soft:#f0edff;--good:#23865b;--bad:#c34e58;--shadow:0 8px 24px rgba(32,33,42,.07)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}button,input,select{font:inherit}button{cursor:pointer}
-.app{width:min(100%,430px);min-height:100vh;margin:0 auto;background:#f8f8fb;position:relative;box-shadow:0 0 32px #2221;padding-bottom:82px}
-.status{height:30px;padding:7px 20px 0;display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:#41414b}
-.header{height:58px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-.brand{display:flex;align-items:center;gap:9px;font-weight:850;font-size:16px;letter-spacing:-.4px}.brandmark{width:29px;height:29px;border-radius:10px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:15px}.profile{width:31px;height:31px;border-radius:50%;background:#efeff4;border:1px solid #e1e1e8;display:grid;place-items:center;font-size:13px}
-main{padding:19px 17px 24px}.screen{display:none;animation:appear .18s ease}.screen.active{display:block}@keyframes appear{from{opacity:.55;transform:translateY(3px)}to{opacity:1;transform:none}}
-.eyebrow{font-size:11px;color:var(--muted);font-weight:650;margin-bottom:7px}.title{font-size:24px;letter-spacing:-1px;line-height:1.25;margin:0 0 7px;font-weight:850}.desc{font-size:12px;color:var(--muted);line-height:1.55;margin:0 0 17px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:15px;margin:11px 0;box-shadow:0 3px 12px #20212a05}.card.soft{background:var(--soft)}.card.purple{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 8px 18px #6554e82c}
-.cardhead{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800;margin-bottom:12px}.hint{font-size:10px;color:var(--muted);font-weight:500}.tag{font-size:10px;border-radius:20px;padding:5px 8px;background:var(--accent-soft);color:var(--accent);font-weight:750;white-space:nowrap}
-.bigmoney{font-size:28px;font-weight:850;letter-spacing:-.8px;margin:7px 0 4px}.small{font-size:11px;color:var(--muted)}.purple .small{color:#e7e3ff}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.metric{padding:12px;background:#fff;border:1px solid var(--line);border-radius:13px;min-width:0}.metric .k{font-size:10px;color:var(--muted);margin-bottom:7px}.metric .v{font-size:17px;font-weight:850;letter-spacing:-.4px}.metric .subv{font-size:10px;color:var(--muted);margin-top:3px}
-.section-title{font-size:14px;font-weight:850;margin:21px 0 9px;letter-spacing:-.3px}
-.btn{border:1px solid #dedee6;background:#fff;color:var(--ink);border-radius:12px;padding:12px 14px;font-size:12px;font-weight:800}
-.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 5px 12px #6554e82c}.btn.ghost{background:#f5f4ff;color:var(--accent);border-color:#e5e1ff}.btn.full{width:100%;margin-top:9px}.btn:active{transform:scale(.99)}
-.field{display:block;margin:12px 0}.field span{display:block;font-size:11px;color:#666875;font-weight:700;margin-bottom:7px}.field input,.field select{width:100%;height:44px;border:1px solid #dedee6;border-radius:11px;background:#fff;padding:0 12px;color:var(--ink);outline:none}.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px #6554e818}
-.row{display:flex;gap:8px}.row>*{flex:1;min-width:0}
-.stock{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);gap:10px}.stock:last-child{border:0;padding-bottom:0}.stockname{font-size:13px;font-weight:800}.stockmeta{font-size:10px;color:var(--muted);margin-top:4px}.stockprice{text-align:right;font-size:13px;font-weight:800;white-space:nowrap}.stockprice small{display:block;font-size:10px;margin-top:4px;color:var(--good)}
-.positive{color:var(--good)!important}.negative{color:var(--bad)!important}
-.chips{display:flex;gap:7px}.chip{border:1px solid #dedee6;border-radius:10px;padding:9px 13px;background:#fff;font-size:11px;font-weight:750;color:#5e606c}.chip.on{background:var(--accent-soft);border-color:#c9c1ff;color:var(--accent)}
-.notice{padding:12px 13px;border:1px solid #e4e1f5;background:#f7f5ff;border-radius:12px;font-size:11px;line-height:1.55;color:#55536b;margin:12px 0}.notice strong{display:block;color:#343247;margin-bottom:3px}.notice.error{background:#fff4f4;border-color:#f0d4d6;color:#8e454a}.notice.error strong{color:#8e454a}.notice.loading{background:#f4f4f7;border-color:#e0e0e7}
-.listitem{display:flex;justify-content:space-between;gap:8px;padding:12px 0;border-bottom:1px solid var(--line);font-size:11px}.listitem:last-child{border:0}.listitem b{font-size:12px}.empty{padding:22px 12px;text-align:center;color:var(--muted);font-size:12px;line-height:1.6}
-.chart{height:132px;border:1px solid var(--line);border-radius:13px;background:linear-gradient(180deg,#fafaff,#fff);padding:12px}.chart svg{width:100%;height:100%}
-.bar{height:7px;background:#ececf1;border-radius:9px;overflow:hidden;margin:8px 0 13px}.bar i{display:block;height:100%;background:var(--accent);border-radius:9px}
-.bottomnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,430px);height:72px;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:8px 8px max(8px,env(safe-area-inset-bottom));z-index:10}
-.navbtn{border:0;background:transparent;color:#92939e;font-size:10px;font-weight:650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}.navbtn .ico{font-size:18px;line-height:1}.navbtn.active{color:var(--accent);font-weight:850}
-@media(min-width:600px){body{padding:22px 0}.app{min-height:calc(100vh - 44px);border-radius:26px;overflow:hidden}.bottomnav{bottom:22px;border-radius:0 0 26px 26px}}
-</style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="app">
@@ -139,39 +111,6 @@ main{padding:19px 17px 24px}.screen{display:none;animation:appear .18s ease}.scr
     <button class="navbtn" data-page="feedback" onclick="navigate('feedback')"><span class="ico">◎</span>AI 분석</button>
   </nav>
 </div>
-<script>
-let side='buy',tradeCount=8,cash=6820000,transactions=[];
-const pages=['home','market','trade','history','analysis','feedback','project'];
-function navigate(page){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===page));
-  document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===page || (page==='trade'&&b.dataset.page==='market') || (page==='project'&&b.dataset.page==='feedback') || (page==='history'&&b.dataset.page==='home')));
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function setSide(value){side=value;document.getElementById('buy').classList.toggle('on',side==='buy');document.getElementById('sell').classList.toggle('on',side==='sell')}
-function won(n){return '₩'+Math.round(n).toLocaleString('ko-KR')}
-function updateTotal(){const q=Number(document.getElementById('quantity').value)||0;document.getElementById('order-total').textContent=won(q*78000)}
-document.getElementById('quantity').addEventListener('input',updateTotal);
-function message(el,type,title,body){el.className='notice'+(type?' '+type:'');el.innerHTML='<strong>'+title+'</strong>'+body}
-function submitTrade(){
- const q=Number(document.getElementById('quantity').value),out=document.getElementById('trade-message'),amount=q*78000;
- if(!Number.isInteger(q)||q<1){message(out,'error','입력 오류','주문 수량은 1 이상의 정수로 입력해 주세요. 수량을 수정한 뒤 다시 실행할 수 있습니다.');return}
- if(side==='buy'&&amount>cash){message(out,'error','가상 잔액 부족','가상 현금 잔액보다 주문 금액이 큽니다. 수량을 줄인 뒤 다시 시도해 주세요.');return}
- message(out,'loading','거래 처리 중','가상 주문을 처리하고 있습니다…');
- setTimeout(()=>{
-   if(side==='buy')cash-=amount;else cash+=amount;
-   tradeCount++;transactions.unshift({label:'오늘 · 삼성전자 '+(side==='buy'?'매수 ':'매도 ')+q+'주',amount});
-   document.getElementById('cash').textContent=won(cash);document.getElementById('trade-cash').textContent=won(cash);
-   document.getElementById('trade-count').textContent=tradeCount+'회';
-   document.getElementById('history-count').textContent=(4+transactions.length)+'건';
-   const row=document.createElement('div');row.className='listitem';row.innerHTML='<span>'+transactions[0].label+'</span><b>'+won(amount)+'</b>';document.getElementById('history-list').prepend(row);
-   document.getElementById('history-empty').hidden=true;
-   const recent=document.createElement('div');recent.className='listitem';recent.innerHTML='<span>'+transactions[0].label+'</span><b>'+won(amount)+'</b>';document.getElementById('recent-list').prepend(recent);
-   message(out,'','거래 완료', (side==='buy'?'매수':'매도')+' '+q+'주가 가상 거래 기록에 반영되었습니다.');
- },450);
-}
-function filterStocks(){const q=document.getElementById('stock-search').value.trim().toLowerCase();let count=0;document.querySelectorAll('#stocks .stock').forEach(row=>{const show=row.dataset.name.toLowerCase().includes(q);row.style.display=show?'flex':'none';if(show)count++});document.getElementById('stock-empty').hidden=count>0}
-function period(p,btn){document.querySelectorAll('#analysis .chip').forEach(x=>x.classList.remove('on'));btn.classList.add('on');const now=new Date('2026-10-31T12:00:00');let start=new Date(now);if(p==='week')start.setDate(start.getDate()-6);if(p==='month')start.setMonth(start.getMonth()-1);if(p==='all')start=new Date('2026-01-01T12:00:00');document.getElementById('from-date').value=start.toISOString().slice(0,10);document.getElementById('to-date').value=now.toISOString().slice(0,10)}
-function analyze(){const from=document.getElementById('from-date').value,to=document.getElementById('to-date').value,msg=document.getElementById('analysis-message'),content=document.getElementById('analysis-content');if(!from||!to||from>to){message(msg,'error','기간 입력 오류','시작일과 종료일을 확인해 주세요. 시작일은 종료일보다 늦을 수 없습니다.');content.innerHTML='';return}message(msg,'loading','분석 처리 중','선택한 기간의 거래 기록을 집계하고 있습니다…');setTimeout(()=>{if(transactions.length===0&&from>'2026-10-31'){message(msg,'','분석 결과 없음','선택한 기간에 확인할 거래 기록이 없습니다. 기간을 변경해 다시 확인해 주세요.');content.innerHTML='<div class="empty">분석할 데이터가 없습니다.</div>'}else{message(msg,'','분석 완료 · 예시 데이터',from+'부터 '+to+'까지의 예시 통계를 표시합니다. 실제 데이터 연동 전의 고정 예시 결과입니다.');}},350)}
-function previewEnd(){document.getElementById('project-status').textContent='종료';message(document.getElementById('project-message'),'error','프로젝트 종료 · 예시 상태','첫 주 평균 거래 횟수가 0건인 경우 체결량 미달로 종료됩니다. BC-01 평가와 첫 주 기록 재평가는 진행하지 않습니다.')}
-</script>
-</body></html>
+<script src="js/script.js"></script>
+</body>
+</html>

@@ -47,7 +47,7 @@ button {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border-radius: 0; /* 상하단 회색 여백 원인이 되는 모서리 둥글기 제거 */
+  border-radius: 0;
 }
 
 /* 3. 헤더 영역 (최상단 0px 밀착) */
@@ -83,6 +83,7 @@ button {
   font-size: 15px;
 }
 
+/* 프로필/로그인 버튼: 글자 수와 상관없이 한 줄로 깔끔하게 표시 */
 .profile {
   min-width: 31px;
   height: 31px;
@@ -517,6 +518,6 @@ main {
   }
   .app {
     height: 100dvh;
-    border-radius: 0; /* 모서리 둥글기로 인한 상하 여백 제거 */
+    border-radius: 0;
   }
 }

@@ -1,5 +1,5 @@
 // 구글 시트 웹앱 URL 설정 (Google Apps Script 배포 URL)
-const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzFo34goaIwr4mohxXB_Y0D8idjrydz5MVjv-w2O_VVwekZZEmXoFzftohO4ZCSu0bF/exec"; 
+const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyKG9qK3_DnzRc4O5hw7TcEAnVG4epvxoKD7RzYapMtj416sCgM_fHUIHXXOQMnd_f0/exec"; 
 
 let side = 'buy', tradeCount = 8, cash = 6820000, transactions = [];
 let isLoggedIn = false; 
@@ -154,7 +154,14 @@ function handleSignup(){
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: id, pw: pw, joinDate: new Date().toISOString() })
+        body: JSON.stringify({ 
+          id: id, 
+          pw: pw, 
+          createdAt: new Date().toISOString(),
+          joinDate: new Date().toLocaleDateString('ko-KR'),
+          balance: 10000000,
+          status: "정상"
+        })
       }).catch(err => console.log('Google Sheets Sync Note:', err));
     } catch(e) {
       console.log('Fetch error:', e);

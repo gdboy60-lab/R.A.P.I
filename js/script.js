@@ -1,5 +1,5 @@
 // 구글 시트 웹앱 URL 설정 (Google Apps Script 배포 URL)
-const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyKG9qK3_DnzRc4O5hw7TcEAnVG4epvxoKD7RzYapMtj416sCgM_fHUIHXXOQMnd_f0/exec"; 
+const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzFo34goaIwr4mohxXB_Y0D8idjrydz5MVjv-w2O_VVwekZZEmXoFzftohO4ZCSu0bF/exec"; 
 
 let side = 'buy', tradeCount = 8, cash = 6820000, transactions = [];
 let isLoggedIn = false; 

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="login">
+  <h1 class="logo">R.A.P.I</h1>
+  <p class="muted">실제 주가로 가상 매매를 하고<br>내 거래 습관을 점수로 확인해요.</p>
+  <form method="post" action="/guest">
+    <button class="btn btn-dark" type="submit">가입 없이 체험으로 시작</button>
+  </form>
+  <p class="small muted center">체험 기록은 이 기기에서만 이어서 볼 수 있어요.</p>
+  <p class="small muted center">이메일 로그인은 2순위 기능이라 아직 없어요.</p>
+</section>
+{% endblock %}

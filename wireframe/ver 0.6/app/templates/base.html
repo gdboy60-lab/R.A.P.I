@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}R.A.P.I{% endblock %}</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="app">
+  {% block clockbar %}{% endblock %}
+  <main class="content">{% block content %}{% endblock %}</main>
+  {% block tabs %}{% endblock %}
+</div>
+{% block scripts %}{% endblock %}
+</body>
+</html>

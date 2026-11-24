@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>새 프로젝트</h1>
+<p class="muted">과거 시장 중 하나를 골라 가상 매매를 시작해요. 실제 날짜는 숨겨져요.</p>
+{% for p in periods %}
+<form method="post" action="/start/{{ p.period_id }}">
+  <button class="card period" type="submit">
+    <strong>{{ p.label }}</strong>
+    <span class="muted">개장일 {{ p.trading_days }}일 · {{ p.n_stocks }}종목</span>
+  </button>
+</form>
+{% else %}
+<p class="card">등록된 리플레이 기간이 없어요. <code>python -m app.seed_dev</code> 를 먼저 실행하세요.</p>
+{% endfor %}
+{% endblock %}

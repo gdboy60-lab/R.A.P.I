@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block clockbar %}
+<header class="clockbar" id="clockbar">
+  <div>
+    <div class="small dim" id="clock-day">{{ clock.day }}일차 / {{ clock.total_days }}일</div>
+    <div class="clock-time" id="clock-time">{{ clock.time }}</div>
+  </div>
+  <div class="clock-buttons">
+    <button id="btn-open"  class="cbtn light">장 열기</button>
+    <button id="btn-toggle" class="cbtn" aria-label="일시정지/재생">❚❚</button>
+    <button id="btn-speed" class="cbtn" aria-label="재생 속도">{{ clock.speed }}×</button>
+    <button id="btn-skip"  class="cbtn light">장 마감까지 ≫</button>
+    <button id="btn-next"  class="cbtn light">다음 거래일</button>
+  </div>
+</header>
+{% endblock %}
+{% block content %}
+<div class="row-between">
+  <h1>내 거래 습관</h1><span class="small muted">전 거래일 마감 기준</span>
+</div>
+<section class="card">
+  <div class="big">{{ '%.1f'|format(scores.overall) }} <span class="muted small">/ 100 전체 점수</span></div>
+  <div class="grid2">
+    {% for key, label in [('RM','위험 관리'),('PA','계획 준수'),('BC','행동 일관성'),('MC','시장 상황')] %}
+    <div class="tile"><span class="small muted">{{ label }}</span><strong>{{ scores[key]|int }}</strong></div>
+    {% endfor %}
+  </div>
+  <p class="small muted">오늘의 감점은 장 마감 후에 공개돼요.</p>
+</section>
+<section class="card row-between">
+  <span class="muted">현금</span><strong>{{ '{:,}'.format(cash) }}원</strong>
+</section>
+{% endblock %}
+{% block tabs %}
+<nav class="tabs">
+  <a class="on" href="/home">홈</a><a href="#">시장</a><a href="#">거래 기록</a><a href="#">피드백</a>
+</nav>
+{% endblock %}
+{% block scripts %}<script src="/static/clock.js"></script>{% endblock %}
